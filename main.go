@@ -1,10 +1,17 @@
 package main
 
 import (
+	"context"
+	"database/sql"
 	"encoding/json"
+	"github.com/brunodrugowick/go-timeseries-poc/pkg/infrastructure/database"
 	"github.com/brunodrugowick/go-timeseries-poc/pkg/server"
 	"html/template"
+	"log"
 	"net/http"
+	"time"
+
+	_ "github.com/lib/pq"
 )
 
 func main() {
@@ -43,6 +50,50 @@ func main() {
 			}
 		}).
 		Build()
+
+	// TODO temp (replace with service layer)
+	// THIS IS JUST TEST CODE
+	ctx := context.Background()
+	db, err := sql.Open("postgres", "user=postgres password=password dbname=postgres sslmode=disable")
+	if err != nil {
+		panic(err)
+	}
+
+	queries := database.New(db)
+
+	// list all
+	measurements, err := queries.ListMeasurements(ctx)
+	if err != nil {
+		panic(err)
+	}
+	log.Println(measurements)
+
+	insertedMeasurement, err := queries.CreateMeasurement(ctx, database.CreateMeasurementParams{
+		CreatedDate: sql.NullInt64{
+			Int64: time.Now().Unix(),
+			Valid: true,
+		},
+		HeartRate: sql.NullInt32{
+			Int32: 123,
+			Valid: true,
+		},
+		High: sql.NullInt32{
+			Int32: 128,
+			Valid: true,
+		},
+		Low: sql.NullInt32{
+			Int32: 98,
+			Valid: true,
+		},
+		Username: sql.NullString{
+			String: "drugo",
+			Valid:  true,
+		},
+	})
+	if err != nil {
+		panic(err)
+	}
+	log.Println(insertedMeasurement)
 
 	srv.Run()
 }
