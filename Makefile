@@ -20,4 +20,5 @@ generate-db-code: install-sqlc
 # ---
 GO_MAIN_FILE = main.go
 run:
+	go mod tidy
 	go run $(GO_MAIN_FILE)
