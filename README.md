@@ -2,6 +2,7 @@
 
 An attempt on the same PoC that I worked on recently, but now in Golang. The plan is to use:
 
+- [ ] Tests
 - [X] Makefiles
 - [X] Only native http stuff for the server
 - [ ] Only native code to read environment variables/config

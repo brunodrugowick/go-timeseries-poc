@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
+	"github.com/brunodrugowick/go-timeseries-poc/pkg/config"
 	"github.com/brunodrugowick/go-timeseries-poc/pkg/infrastructure/database"
 	"github.com/brunodrugowick/go-timeseries-poc/pkg/server"
 	"html/template"
@@ -15,6 +17,9 @@ import (
 )
 
 func main() {
+
+	properties := config.Properties{}
+	fmt.Println(properties)
 
 	srv := server.NewDefaultServerBuilder().
 		SetPort(8080).
