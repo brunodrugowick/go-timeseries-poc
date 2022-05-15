@@ -18,7 +18,7 @@ generate-db-code: install-sqlc
 	cd $(DB_PACKAGE); sqlc generate
 
 # ---
-GO_MAIN_FILE = main.go
+GO_MAIN_FILE = ./cmd/timeseries-poc/main.go
 run:
 	go mod tidy
 	go run $(GO_MAIN_FILE)
