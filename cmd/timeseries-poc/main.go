@@ -11,14 +11,14 @@ import (
 	"github.com/brunodrugowick/go-timeseries-poc/pkg/server"
 	_ "github.com/lib/pq"
 	"html/template"
+	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
 
-	reader := config_reader.NewConfigReader()
-	var props config.Properties
-	reader.Read(&props)
+	props := readProperties()
 
 	// TODO temp (replace with service layer)
 	// THIS IS JUST TEST CODE
@@ -103,4 +103,28 @@ func main() {
 		Build()
 
 	srv.Run()
+}
+
+func readProperties() config.Properties {
+	const configLocationEnvVar = "CONFIG"
+	configLocation, ok := os.LookupEnv(configLocationEnvVar)
+
+	var reader config_reader.ConfigReader
+	if ok {
+		log.Printf("Config location found in environment variable CONFIG=%s", configLocation)
+		reader = config_reader.ConfigReader{
+			File:        configLocation,
+			Environment: true,
+		}
+	} else {
+		reader = config_reader.DefaultConfigReader()
+	}
+
+	var props config.Properties
+	err := reader.Read(&props)
+	if err != nil {
+		log.Printf("Could not read properties")
+		return config.Properties{}
+	}
+	return props
 }

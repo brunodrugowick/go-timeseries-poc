@@ -19,6 +19,7 @@ generate-db-code: install-sqlc
 
 # ---
 GO_MAIN_FILE = ./cmd/timeseries-poc/main.go
+CONFIG_FILE = ./properties.json
 run:
 	go mod tidy
-	go run $(GO_MAIN_FILE)
+	CONFIG=$(CONFIG_FILE) go run $(GO_MAIN_FILE)
