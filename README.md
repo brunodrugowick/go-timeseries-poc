@@ -76,3 +76,17 @@ func main() {
 	fmt.Println(props)
 }
 ```
+
+Environment variables can override the JSON values if the Environment property is set to `true`.
+
+Use uppercase values with `_` as separator of keys. For example, the following JSON value:
+
+```json
+{
+  "server": {
+    "port": 8080
+  }
+}
+```
+
+can be overridden with the environment variable `SERVER_PORT`.
