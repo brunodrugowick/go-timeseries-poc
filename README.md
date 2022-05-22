@@ -40,53 +40,9 @@ To generate the whole `pkg/infrastructure/database` package based on the `pkg/in
 make generate-db-code
 ```
 
-### Config Reader
+## Reusable packages
 
-A package that reads properties from a `.json` file according to a given struct. Usage is as follows.
+Each package has (or will have) its own README.md. The following is a list of the current reusable packages:
 
-For a JSON in `./`:
-
-```json
-{
-  "prop1": "value1",
-  "prop2": "value2"
-}
-```
-
-The following code reads the values to the `props` variable:
-
-```go
-package main
-
-import (
-	"fmt"
-	"github.com/brunodrugowick/go-timeseries-poc/pkg/config-reader"
-)
-
-type Properties struct {
-	Prop1 string `json:"prop1"`
-	Prop2 string `json:"prop2"`
-}
-
-func main() {
-	reader := config_reader.NewConfigReader()
-	var props Properties
-	reader.Read(&props)
-
-	fmt.Println(props)
-}
-```
-
-Environment variables can override the JSON values if the Environment property is set to `true`.
-
-Use uppercase values with `_` as separator of keys. For example, the following JSON value:
-
-```json
-{
-  "server": {
-    "port": 8080
-  }
-}
-```
-
-can be overridden with the environment variable `SERVER_PORT`.
+- `config-reader`
+- `server`
