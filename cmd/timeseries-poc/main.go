@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/brunodrugowick/go-timeseries-poc/cmd/timeseries-poc/internal/config"
-	config_reader "github.com/brunodrugowick/go-timeseries-poc/pkg/config-reader"
+	configreader "github.com/brunodrugowick/go-timeseries-poc/pkg/config-reader"
 	"github.com/brunodrugowick/go-timeseries-poc/pkg/infrastructure/database"
 	"github.com/brunodrugowick/go-timeseries-poc/pkg/server"
 	_ "github.com/lib/pq"
@@ -109,15 +109,15 @@ func readProperties() config.Properties {
 	const configLocationEnvVar = "CONFIG"
 	configLocation, ok := os.LookupEnv(configLocationEnvVar)
 
-	var reader config_reader.ConfigReader
+	var reader configreader.ConfigReader
 	if ok {
 		log.Printf("Config location found in environment variable CONFIG=%s", configLocation)
-		reader = config_reader.ConfigReader{
+		reader = configreader.ConfigReader{
 			File:        configLocation,
 			Environment: true,
 		}
 	} else {
-		reader = config_reader.DefaultConfigReader()
+		reader = configreader.DefaultConfigReader()
 	}
 
 	var props config.Properties
