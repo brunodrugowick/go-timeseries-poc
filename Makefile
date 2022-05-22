@@ -18,6 +18,15 @@ generate-db-code: install-sqlc
 	cd $(DB_PACKAGE); sqlc generate
 
 # ---
-GO_MAIN_FILE = main.go
-run:
-	go run $(GO_MAIN_FILE)
+tidy:
+	go mod tidy
+
+build: tidy
+	mkdir -p build
+	go build -o ./build/timeseries-poc ./cmd/timeseries-poc
+	chmod +x ./build/timeseries-poc
+
+GO_MAIN_FILE = ./cmd/timeseries-poc/main.go
+CONFIG_FILE = ./properties.json
+run: build
+	CONFIG=$(CONFIG_FILE) ./build/timeseries-poc

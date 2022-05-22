@@ -1,0 +1,18 @@
+### This is an HTTP client that IntelliJ IDEs understand
+### Sorry if it's not your IDE. I can add a API Spec later.
+
+### TODO Temporarily using the models from the DB to test
+POST http://localhost:8080/measurements
+Content-Type: application/json
+
+{
+  "CreatedDate":{"Int64":{{$timestamp}},"Valid":true},
+  "HeartRate":{"Int32":123,"Valid":true},
+  "High":{"Int32":128,"Valid":true},
+  "Low":{"Int32":98,"Valid":true},
+  "Username":{"String":"drugo","Valid":true}
+}
+
+###
+GET http://localhost:8080/measurements
+Content-Type: application/json
