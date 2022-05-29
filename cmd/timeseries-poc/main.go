@@ -28,6 +28,7 @@ func main() {
 		props.Database.Password,
 		props.Database.Name)
 	db, err := sql.Open(props.Database.Driver, connectionString)
+	err = db.Ping()
 	if err != nil {
 		panic(err)
 	}
